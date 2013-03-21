@@ -102,6 +102,7 @@ function GridStatusTortosShields:OnStatusEnable(status)
 		self:RegisterEvent("ZONE_CHANGED", "UpdateTracking")
 		self:RegisterEvent("ZONE_CHANGED_INDOORS", "UpdateTracking")
 		self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "UpdateTracking")
+		self:UpdateTracking()
 	end
 end
 
