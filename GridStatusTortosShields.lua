@@ -188,6 +188,6 @@ function GridStatusTortosShields:UpdateUnitShield(unitid)
 		shieldFull and "Interface\\Icons\\inv_datacrystal08" or "Interface\\Icons\\INV_DataCrystal01",
 		nil,
 		nil,
-		math.floor(shield / maxShield)
+		shieldFull and 100 or (math.floor((shield / maxShield) * 99) + 1)
 	)
 end
