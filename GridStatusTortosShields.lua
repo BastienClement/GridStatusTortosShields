@@ -92,11 +92,11 @@ function GridStatusTortosShields:UpdateTracking()
 	if should_track ~= tracking then
 		if tracking then
 			-- Ends tracking
-			print("Tortos Shield: stop tracking")
+			--print("Tortos Shield: stop tracking")
 			self:Reset()
 		else
 			-- Start tracking
-			print("Tortos Shield: start tracking")
+			--print("Tortos Shield: start tracking")
 			self:RegisterMessage("Grid_RosterUpdated", "UpdateAllUnits")
 			self:RegisterEvent("UNIT_MAXHEALTH", "UpdateUnit")
 			self:RegisterEvent("UNIT_ABSORB_AMOUNT_CHANGED", "UpdateUnit")
