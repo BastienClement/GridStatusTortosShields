@@ -46,9 +46,54 @@ local settings
 local tracking = false
 local unitHasShield = {}
 
+local TortosShields_options = {
+	["break1"] = {
+		type = "description",
+		order = 80,
+		name = "",
+	},
+	["color"] = {
+		type = "color",
+		name = "Color 1",
+		desc = "Color when the shield is not fully stacked",
+		hasAlpha = true,
+		order = 81,
+		get = function ()
+			local color = settings.color
+			return color.r, color.g, color.b, color.a
+		end,
+		set = function (_, r, g, b, a)
+			local color = settings.color
+			color.r = r
+			color.g = g
+			color.b = b
+			color.a = a or 1
+		end,
+	},
+	["colorFull"] = {
+		type = "color",
+		name = "Color 2",
+		desc = "Color once the shield is fully stacked.",
+		hasAlpha = true,
+		order = 82,
+		get = function ()
+			local color = settings.colorFull
+			return color.r, color.g, color.b, color.a
+		end,
+		set = function (_, r, g, b, a)
+			local color = settings.colorFull
+			color.r = r
+			color.g = g
+			color.b = b
+			color.a = a or 1
+		end,
+	},
+	["opacity"] = false
+}
+
 function GridStatusTortosShields:OnInitialize()
 	self.super.OnInitialize(self)
-	self:RegisterStatus("unit_crystal_shell", "Tortos: "..SPELL_SHIELD, nil, true)
+	self:RegisterStatus("unit_crystal_shell", "Tortos: "..SPELL_SHIELD, TortosShields_options, true)
 	settings = self.db.profile.unit_crystal_shell
 end
 
