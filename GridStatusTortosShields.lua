@@ -179,11 +179,14 @@ function GridStatusTortosShields:UpdateUnitShield(unitid)
 		guid,
 		"unit_crystal_shell",
 		settings.priority,
-		shieldFull and "Interface\\Icons\\inv_datacrystal08" or "Interface\\Icons\\INV_DataCrystal01",
+		nil,
 		shieldFull and settings.colorFull or settings.color,
 		tostring(shield),
 		shield,
 		maxShield,
+		shieldFull and "Interface\\Icons\\inv_datacrystal08" or "Interface\\Icons\\INV_DataCrystal01",
+		nil,
+		nil,
 		math.floor(shield / maxShield)
 	)
 end
