@@ -44,6 +44,7 @@ GridStatusTortosShields.options = false
 
 local settings
 local tracking = false
+local unitHasShield = {}
 
 function GridStatusTortosShields:OnInitialize()
 	self.super.OnInitialize(self)
@@ -79,6 +80,8 @@ function GridStatusTortosShields:Reset()
 	self:UnregisterEvent("UNIT_MAXHEALTH")
 	self:UnregisterEvent("UNIT_ABSORB_AMOUNT_CHANGED")
 	tracking = false
+	
+	unitHasShield = {}
 end
 
 function GridStatusTortosShields:UpdateAllUnits()
@@ -112,24 +115,30 @@ end
 
 function GridStatusTortosShields:UpdateUnitShield(unitid)
 	local shield = select(15, UnitDebuff(unitid, SPELL_SHIELD))
-	local shieldFull = UnitDebuff(unitid, SPELL_SHIELD_FULL)
-	
-	local maxShield = UnitHealthMax(unitid) * 0.75
 	local guid = UnitGUID(unitid)
-
+	
 	if not shield then
-		self.core:SendStatusLost(guid, "unit_crystal_shell")
-	else
-		self.core:SendStatusGained(
-			guid,
-			"unit_crystal_shell",
-			settings.priority,
-			nil,
-			shieldFull and settings.colorFull or settings.color,
-			tostring(shield),
-			shield,
-			maxShield,
-			nil
-		)
+		if unitHasShield[guid] then
+			unitHasShield[guid] = nil
+			self.core:SendStatusLost(guid, "unit_crystal_shell")
+		end
+		return
+	elseif not unitHasShield[guid] then
+		unitHasShield[guid] = true
 	end
+	
+	local shieldFull = UnitDebuff(unitid, SPELL_SHIELD_FULL)
+	local maxShield = UnitHealthMax(unitid) * 0.75
+
+	self.core:SendStatusGained(
+		guid,
+		"unit_crystal_shell",
+		settings.priority,
+		shieldFull and "Interface\\Icons\\inv_datacrystal08" or "Interface\\Icons\\INV_DataCrystal01",
+		shieldFull and settings.colorFull or settings.color,
+		tostring(shield),
+		shield,
+		maxShield,
+		math.floor(shield / maxShield)
+	)
 end
