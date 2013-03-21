@@ -1,0 +1,6 @@
+## Interface: 50200
+## Title: GridStatusTortosShields
+## Notes: Tracker for Crystal Shells on Tortos Heroic encounter
+## Dependencies: Grid
+
+GridStatusTortosShields.lua
