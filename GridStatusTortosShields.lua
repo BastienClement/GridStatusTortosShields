@@ -182,7 +182,7 @@ function GridStatusTortosShields:UpdateUnitShield(unitid)
 		settings.priority,
 		nil,
 		shieldFull and settings.colorFull or settings.color,
-		tostring(shield),
+		(shield > 999) and string.format("%.1fk", shield / 1000) or tostring(shield),
 		shield,
 		maxShield,
 		shieldFull and "Interface\\Icons\\inv_datacrystal08" or "Interface\\Icons\\INV_DataCrystal01",
