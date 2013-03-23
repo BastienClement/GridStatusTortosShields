@@ -35,7 +35,8 @@ GridStatusTortosShields.defaultDB = {
 		text = "Crystal Shell",
 		enable = true,
 		priority = 30,
-		range = false
+		range = false,
+		percAsStack = true
 	}
 }
 
@@ -86,6 +87,24 @@ local TortosShields_options = {
 			color.g = g
 			color.b = b
 			color.a = a or 1
+		end,
+	},
+	["break2"] = {
+		type = "description",
+		order = 90,
+		name = "",
+	},
+	["percAsStack"] = {
+		type = "toggle",
+		name = "Percent as stacks",
+		desc = "Displays shield percent as stacks (like Sanity on Yogg-Saron)",
+		order = 92,
+		get = function()
+			return settings.percAsStack
+		end,
+		set = function(_, v)
+			settings.percAsStack = v
+			GridStatusTortosShields:UpdateAllUnits()
 		end,
 	},
 	["opacity"] = false
@@ -188,6 +207,6 @@ function GridStatusTortosShields:UpdateUnitShield(unitid)
 		shieldFull and "Interface\\Icons\\inv_datacrystal08" or "Interface\\Icons\\INV_DataCrystal01",
 		nil,
 		nil,
-		shieldFull and 100 or (math.floor((shield / maxShield) * 99) + 1)
+		settings.percAsStack and (shieldFull and 100 or (math.floor((shield / maxShield) * 99) + 1)) or nil
 	)
 end
