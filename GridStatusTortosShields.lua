@@ -36,6 +36,7 @@ GridStatusTortosShields.defaultDB = {
 		enable = true,
 		priority = 30,
 		range = false,
+		shortText = true,
 		percAsStack = true
 	}
 }
@@ -93,6 +94,19 @@ local TortosShields_options = {
 		type = "description",
 		order = 90,
 		name = "",
+	},
+	["shortText"] = {
+		type = "toggle",
+		name = "Short text",
+		desc = "Displays 1250 as 1.2k",
+		order = 91,
+		get = function()
+			return settings.shortText
+		end,
+		set = function(_, v)
+			settings.shortText = v
+			GridStatusTortosShields:UpdateAllUnits()
+		end,
 	},
 	["percAsStack"] = {
 		type = "toggle",
@@ -201,7 +215,7 @@ function GridStatusTortosShields:UpdateUnitShield(unitid)
 		settings.priority,
 		nil,
 		shieldFull and settings.colorFull or settings.color,
-		(shield > 999) and string.format("%.1fk", shield / 1000) or tostring(shield),
+		(shield > 999 and settings.shortText) and string.format("%.1fk", shield / 1000) or tostring(shield),
 		shield,
 		maxShield,
 		shieldFull and "Interface\\Icons\\inv_datacrystal08" or "Interface\\Icons\\INV_DataCrystal01",
