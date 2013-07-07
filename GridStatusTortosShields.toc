@@ -1,4 +1,4 @@
-## Interface: 50300
+## Interface: 50400
 ## Title: GridStatusTortosShields
 ## Notes: Tracker for Crystal Shells on Tortos Heroic encounter
 ## Dependencies: Grid
